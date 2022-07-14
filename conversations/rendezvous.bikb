@@ -1,0 +1,21 @@
+class Sentences
+{
+	class Sentence1
+	{
+		text = "Are you the ANA guy?";
+		speech[] = { "\conversations\sound\untitled.ogg" };
+		class Arguments {};
+		actor = "playerEnteringTrigger";
+	};
+	class Sentence2
+	{
+		text = "Right, you must be the British guy that is doing anti-mine missions. Listen to me closely if you wanna live. Any wreck, loosely placed cardboard, anything, that is out of place, can contain IED's. Make Sure that you check everyone one of them.";
+		speech[] = { "\conversations\sound\untitled.ogg" };
+		class Arguments {};
+		actor = "ANA_1";
+	};
+};
+class Arguments {};
+class Special {};
+startWithVocal[] = { hour };
+startWithConsonant[] = { europe, university };
