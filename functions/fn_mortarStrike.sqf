@@ -13,13 +13,13 @@
   Params:
     0: <object> Trigger
     1: <array> (optional)
-      HE Round Count
-      HE Delay between rounds in seconds
-      HE Radius of rounds around center of trigger location
+      <number> HE Round Count
+      <number> HE Delay between rounds in seconds
+      <number> HE Radius of rounds around center of trigger location
     2: <array> (optional)
-      Smoke Round Count
-      Smoke Delay between rounds in seconds
-      Smoke Radius of rounds around center of trigger location
+      <number> Smoke Round Count
+      <number> Smoke Delay between rounds in seconds
+      <number> Smoke Radius of rounds around center of trigger location
 */
 
 [_this] spawn {
