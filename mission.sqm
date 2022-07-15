@@ -8,7 +8,7 @@ class EditorData
 	toggles=1;
 	class ItemIDProvider
 	{
-		nextID=26;
+		nextID=27;
 	};
 	class MarkerIDProvider
 	{
@@ -16,14 +16,14 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={6204.5991,84.263885,2758.7939};
-		dir[]={0.11697669,-0.45397025,0.88330489};
-		up[]={0.059599254,0.89101684,0.45004106};
-		aside[]={0.99134475,3.7252903e-009,-0.13128449};
+		pos[]={6260.4097,84.509697,2779.2988};
+		dir[]={-0.48280889,-0.58243942,0.65395713};
+		up[]={-0.34594154,0.81287414,0.46857244};
+		aside[]={0.80449992,0,0.59395283};
 	};
 };
 binarizationWanted=0;
-sourceName="ATGM_mission";
+sourceName="ATGM_A3";
 addons[]=
 {
 	"A3_Characters_F",
@@ -124,7 +124,7 @@ class Mission
 	};
 	class Entities
 	{
-		items=12;
+		items=13;
 		class Item0
 		{
 			dataType="Group";
@@ -957,6 +957,22 @@ class Mission
 				};
 				nAttributes=4;
 			};
+		};
+		class Item12
+		{
+			dataType="Object";
+			class PositionInfo
+			{
+				position[]={6241.7695,60.60239,2813.5408};
+				angles[]={6.2751918,0,0};
+			};
+			side="Empty";
+			flags=4;
+			class Attributes
+			{
+			};
+			id=26;
+			type="ACE_Box_Ammo";
 		};
 	};
 	class Connections

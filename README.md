@@ -1,3 +1,5 @@
+BRIEFING
+The briefing text can be customized in description\CfgBriefing.hpp.
 
 
 AUTOMATIC SUPPLY BOX FILLING
@@ -5,6 +7,9 @@ AUTOMATIC SUPPLY BOX FILLING
 2. at each update, the server will rebroadcast the "supply box contents" variable to all machines
 3. when ATGM_fnc_fillCrateFromPlayers is called, the box is filled with magazines representing the starting loadouts of each player + a small set of medical supplies
   [_this] call ATGM_fnc_fillCrateFromPlayers;
+
+note: if Zeus Enhanced (ZEN) is loaded, a dialog will be presented to the actor that will prompt for ALL or a specific squad to fill it based off, as well as a picker that will allow them to pick 25%, 50%, 75%, or 100% resupply. The total saved count of each unique item will be reduced by the given percentage, and there will always be at least one of every saved item.
+
 
 CONVERSATIONS
 Use this in a trigger, and adjust to match description.ext > CfgSentences
@@ -24,6 +29,7 @@ The ANA_1 variable is the AI speaker. If you want more than one, give them a sen
   ]
 ] spawn BIS_fnc_kbTell;
 ```
+
 
 ORBAT
 1. Place an ORBAT group module (F5 > Strategic > ORBAT Group)

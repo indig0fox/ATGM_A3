@@ -32,7 +32,7 @@ if (isNil "ATGM_supplyBoxContents") exitWith {};
 
 
 private _applyChanges = {
-  params ["_box", "_squad"];
+  params ["_box", "_squad", "_supplyPercent"];
 
   if (_squad != "All" && isNil {ATGM_supplyBoxContents get _squad}) exitWith {
     ["No Data", "No data logged for squad """ + _squad + """.", 7] call BIS_fnc_curatorHint;
@@ -61,56 +61,69 @@ private _applyChanges = {
   };
 
 
+  _mags = (_squadData get "magazines") call BIS_fnc_consolidateArray;
   {
-    _box addItemCargoGlobal [_x, 1];
-  } forEach (_squadData get "magazines");
+    _x params ["_className", "_countSaved"];
+    _countToAdd = ceil(_countSaved * _supplyPercent);
+    _box addItemCargoGlobal [_className, _countToAdd];
+  } forEach _mags;
 
+  _items = (_squadData get "items") call BIS_fnc_consolidateArray;
   {
-    _box addItemCargoGlobal [_x, 1];
-  } forEach (_squadData get "items");
+    _x params ["_className", "_countSaved"];
+    _countToAdd = ceil(_countSaved * _supplyPercent);
+    _box addItemCargoGlobal [_className, _countToAdd];
+  } forEach _items;
 
 
   ["Success", "Box has been loaded to resupply """ + _squad + """.", 7] call BIS_fnc_curatorHint;
 };
 
 
-if (!isNil "SSS_CDS_fnc_dialog") then {
+if (!isNil "zen_dialog_fnc_create") then {
   // PROMPT FOR SELECTION IF SIMPLEX SUPPORT SERVICES MOD IS PRESENT
-  private _squadsToPickFrom = [["All", nil, nil]] + (
-    (keys ATGM_supplyBoxContents) apply {
-      [
-        _x,
-        nil,
-        nil
-      ]
-    }
-  );
+  private _squadsToPickFrom = ["All"] + (keys ATGM_supplyBoxContents);
 
   [
     "SUPPLY BOX - SELECT SQUAD",
     [
       [
-        "LISTNBOX",
-        "Squads",
+        "COMBO",
+        "Squad Selection",
         [
-          _squadsToPickFrom,
-          0,
-          (count (keys ATGM_supplyBoxContents)) + 1
+          _squadsToPickFrom apply {_squadsToPickFrom find _x},
+          _squadsToPickFrom apply {
+            [
+              _x,
+              "",
+              getText(configFile >> "CfgMarkers" >> ("loc_Letter" + (_x select [0, 1])) >> "icon")
+            ]
+          },
+          0
+        ]
+      ],
+      [
+        "COMBO",
+        "Portion of Original Supplies",
+        [
+          [0.25, 0.5, 0.75, 1],
+          ["25%", "50%", "75%", "100%"],
+          3
         ]
       ]
     ],
     {
       params ["_values","_args"];
-      _values params ["_squadSelected"];
+      _values params ["_squadSelected", "_supplyPercent"];
       _args params ["_box", "_squadsToPickFrom", "_code"];
-      _squadsToPickFrom = _squadsToPickFrom apply {_x#0};
+      systemChat str _values;
       _squad = _squadsToPickFrom select _squadSelected;
 
-      [_box, _squad] call _code;
+      [_box, _squad, _supplyPercent] call _code;
     },
     {},
     [_box, _squadsToPickFrom, _applyChanges]
-  ] call SSS_CDS_fnc_dialog;
+  ] call zen_dialog_fnc_create;
 
 } else {
   // OTHERWISE RELY ON PARAMETER

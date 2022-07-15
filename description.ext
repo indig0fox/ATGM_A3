@@ -1,24 +1,14 @@
-class CfgFunctions {
-  class ATGM {
-    class functions {
-      file = "functions";
-      class fillCrateFromPlayers{};
-      class mortarStrike{};
-      class client_sendMags{
-        postInit=1;
-      };
-      class notify{};
-    };
-  };
-};
 
-class CfgSentences {
-  class MyMission {
-    class Rendezvous {
-      file = "conversations\rendezvous.bikb";
-      #include "conversations\rendezvous.bikb"
-    };
-  };
-};
+// Mission Info
+overviewPicture = "description\media\atgm-logo.paa";
 
+// Mission Settings
+aiKills = 0; // will hide ai kills from scoreboard
+disabledAI = 1; // removes playable units without human players, AI will not take over if a player DCs
+enableDebugConsole = 1; // makes debug console available for logged-in admins
+
+
+#include "description\CfgBriefing.hpp"
 #include "description\CfgOrbat.hpp"
+#include "description\CfgFunctions.hpp"
+#include "description\CfgSentences.hpp"

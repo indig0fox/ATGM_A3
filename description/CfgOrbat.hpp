@@ -5,7 +5,7 @@ class CfgORBAT {
     side = "Resistance"; // Unit side from CfgChainOfCommand >> Sides
     size = "Company"; // Unit size from CfgChainOfCommand >> Sizes. Displays relevant icon above the Type icon
     type = "HQ"; // Unit type from CfgChainOfCommand >> Types
-    // insignia = "\ca\missions_f\data\orbat\7thInfantry_ca.paa"; // Unit insignia, displayed in ORBAT background and in tooltip
+    insignia = "description\media\atgm-logo.paa"; // Unit insignia, displayed in ORBAT background and in tooltip
     // colorInsignia[] = {0,0,1,1}; // Insignia image color (white default), can be either RGBA array, or class from CfgMarkerColors
     // commander = "Armstrong"; // Name of unit commander. Can be either direct name, or class from CfgWorlds >> GenericNames (random name from the list is then selected)
     // commanderRank = "GENERAL"; // Rank of unit commander (by default selected based on unit size)
@@ -30,7 +30,7 @@ class CfgORBAT {
     side = "Resistance"; // Unit side from CfgChainOfCommand >> Sides
     size = "Platoon"; // Unit size from CfgChainOfCommand >> Sizes. Displays relevant icon above the Type icon
     type = "HQ"; // Unit type from CfgChainOfCommand >> Types
-    // insignia = "\ca\missions_f\data\orbat\7thInfantry_ca.paa"; // Unit insignia, displayed in ORBAT background and in tooltip
+    insignia = "description\media\atgm-logo.paa"; // Unit insignia, displayed in ORBAT background and in tooltip
     // colorInsignia[] = {0,0,1,1}; // Insignia image color (white default), can be either RGBA array, or class from CfgMarkerColors
     // commander = "Armstrong"; // Name of unit commander. Can be either direct name, or class from CfgWorlds >> GenericNames (random name from the list is then selected)
     // commanderRank = "GENERAL"; // Rank of unit commander (by default selected based on unit size)
