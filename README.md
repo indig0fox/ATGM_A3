@@ -7,17 +7,25 @@ This framework is intended to provide an enhanced foundation for Zeus-controlled
 ## BRIEFING
 The briefing text can be customized in `description\CfgBriefing.hpp`. It will be displayed on the "Briefing" section of the map diary.
 
-## ACRE2 AUTO-SETUP
-Standardized platoon-net setup will be auto-configured if ACRE2 is loaded as an addon for the server and clients. PRC-343s will be removed, all players will have a PRC-152, and PRC-117F LR radios can be assigned to leadership in EDEN editor/placed in a box.
+## ACRE2 AND TFAR BETA AUTO-SETUP
+Standardized platoon-net setup will be auto-configured if either addon is loaded for the server and clients. 
 
-    CHAN 1 - DEFAULT
-    CHAN 2 - ALPHA SQD
-    CHAN 3 - BRAVO SQD
-    CHAN 4 - CHARLIE SQD
-    CHAN 5 - DELTA SQD
-    CHAN 6 - PLATOON
-    CHAN 7 - CAS
-    CHAN 8 - FIRES
+### ACRE2
+PRC-343s will be removed, all players will have a PRC-152, and PRC-117F LR radios can be assigned to leadership in EDEN editor/placed in a box.
+
+### TFAR BETA
+Radio assignment will not change. SR and LR radios will be autotuned so channels correspond to the proper frequencies for easy switching.
+
+### PRESET FREQUENCIES
+
+    CHAN 1 - DEFAULT - 40
+    CHAN 2 - ALPHA SQD - 51
+    CHAN 3 - BRAVO SQD - 52
+    CHAN 4 - CHARLIE SQD - 53
+    CHAN 5 - DELTA SQD - 54
+    CHAN 6 - PLATOON - 41
+    CHAN 7 - CONVOY - 60
+    CHAN 8 - MEDICAL - 61
 
 
 ## AUTOMATIC SUPPLY BOX FILLING
