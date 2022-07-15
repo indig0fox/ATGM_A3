@@ -5,6 +5,7 @@ class CfgFunctions {
       class fillCrateFromPlayers{};
       class mortarStrike{};
       class notify{};
+      class ACRE2RadioSetup{postInit=1;};
       class client_briefing{postInit=1;};
       class client_sendMags{postInit=1;};
       class server_prepResupply{postInit=1;};
