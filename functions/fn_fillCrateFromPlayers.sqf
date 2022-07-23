@@ -30,9 +30,9 @@ if (isNil "ATGM_supplyBoxContents") exitWith {};
 
 
 
-
+// this function takes params of the box to fill, the squad to fill it for (or ALL), and optional supply percentage
 private _applyChanges = {
-  params ["_box", "_squad", "_supplyPercent"];
+  params ["_box", "_squad", ["_supplyPercent", 1, [1]]];
 
   if (_squad != "All" && isNil {ATGM_supplyBoxContents get _squad}) exitWith {
     ["No Data", "No data logged for squad """ + _squad + """.", 7] call BIS_fnc_curatorHint;
@@ -74,6 +74,25 @@ private _applyChanges = {
     _countToAdd = ceil(_countSaved * _supplyPercent);
     _box addItemCargoGlobal [_className, _countToAdd];
   } forEach _items;
+
+  // for now, the only weapons in boxes will be 2x the primary weapon of the AI unit with varname "N1" if it exists
+  _weapons = ((ATGM_supplyBoxContents getOrDefault [
+      "Standard",
+      createHashMapFromArray [
+        ["magazines", []],
+        ["items", []],
+        ["weapons", []]
+      ],
+      true
+    ]) get "weapons") call BIS_fnc_consolidateArray;
+
+  {
+    _x params ["_className", "_countSaved"];
+    // _countToAdd = ceil(_countSaved * _supplyPercent);
+    _countToAdd = _countSaved;
+    _box addWeaponCargoGlobal [_className, _countToAdd];
+  } forEach _weapons;
+
 
 
   ["Success", "Box has been loaded to resupply """ + _squad + """.", 7] call BIS_fnc_curatorHint;

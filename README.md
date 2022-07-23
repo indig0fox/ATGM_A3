@@ -17,15 +17,16 @@ PRC-343s will be removed, all players will have a PRC-152, and PRC-117F LR radio
 Radio assignment will not change. SR and LR radios will be autotuned so channels correspond to the proper frequencies for easy switching.
 
 ### PRESET FREQUENCIES
-
-    CHAN 1 - DEFAULT - 40
-    CHAN 2 - ALPHA SQD - 51
-    CHAN 3 - BRAVO SQD - 52
-    CHAN 4 - CHARLIE SQD - 53
-    CHAN 5 - DELTA SQD - 54
-    CHAN 6 - PLATOON - 41
-    CHAN 7 - CONVOY - 60
-    CHAN 8 - MEDICAL - 61
+    Channel      Label        Freq
+    ===============================
+    CHAN 1      DEFAULT         40
+    CHAN 2      ALPHA SQD       51
+    CHAN 3      BRAVO SQD       52
+    CHAN 4      CHARLIE SQD     53
+    CHAN 5      DELTA SQD       54
+    CHAN 6      PLATOON         41
+    CHAN 7      CONVOY          60
+    CHAN 8      MEDICAL         61
 
 
 ## AUTOMATIC SUPPLY BOX FILLING
@@ -37,6 +38,8 @@ Radio assignment will not change. SR and LR radios will be autotuned so channels
     ```sqf
     [_this] call ATGM_fnc_fillCrateFromPlayers;
     ```
+
+An AI unit may be placed down with variable name `N1` and 2x of its primary weapon will be added to any box variant.
 
 note: if Zeus Enhanced (ZEN) is loaded, a dialog will be presented to the actor that will prompt for ALL or a specific squad to fill it based off, as well as a picker that will allow them to pick 25%, 50%, 75%, or 100% resupply. The total saved count of each unique item will be reduced by the given percentage, and there will always be at least one of every saved item.
 
