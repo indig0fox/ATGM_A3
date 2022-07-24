@@ -135,7 +135,7 @@ if (!isNil "zen_dialog_fnc_create") then {
       params ["_values","_args"];
       _values params ["_squadSelected", "_supplyPercent"];
       _args params ["_box", "_squadsToPickFrom", "_code"];
-      systemChat str _values;
+      // systemChat str _values;
       _squad = _squadsToPickFrom select _squadSelected;
 
       [_box, _squad, _supplyPercent] call _code;
