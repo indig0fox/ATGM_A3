@@ -61,22 +61,35 @@ private _applyChanges = {
   };
 
 
-  _mags = (_squadData get "magazines") call BIS_fnc_consolidateArray;
+  private _mags = (_squadData get "magazines") call BIS_fnc_consolidateArray;
   {
     _x params ["_className", "_countSaved"];
     _countToAdd = ceil(_countSaved * _supplyPercent);
     _box addItemCargoGlobal [_className, _countToAdd];
   } forEach _mags;
 
-  _items = (_squadData get "items") call BIS_fnc_consolidateArray;
+  private _items = (_squadData get "items") call BIS_fnc_consolidateArray;
   {
     _x params ["_className", "_countSaved"];
     _countToAdd = ceil(_countSaved * _supplyPercent);
     _box addItemCargoGlobal [_className, _countToAdd];
   } forEach _items;
 
+
+  // standard weapons and items for all boxes
+  private _standardItems = [
+    ["ACE_EntrenchingTool", 2],
+    ["ACE_rope6", 2],
+    ["ACE_SpareBarrel_Item", 2]
+  ];
+  {
+    _x params ["_className", "_countToAdd"];
+    _box addItemCargoGlobal [_className, _countToAdd];
+  } forEach _standardItems;
+
+
   // for now, the only weapons in boxes will be 2x the primary weapon of the AI unit with varname "N1" if it exists
-  _weapons = ((ATGM_supplyBoxContents getOrDefault [
+  _standardWeapons = ((ATGM_supplyBoxContents getOrDefault [
       "Standard",
       createHashMapFromArray [
         ["magazines", []],
@@ -91,7 +104,7 @@ private _applyChanges = {
     // _countToAdd = ceil(_countSaved * _supplyPercent);
     _countToAdd = _countSaved;
     _box addWeaponCargoGlobal [_className, _countToAdd];
-  } forEach _weapons;
+  } forEach _standardWeapons;
 
 
 
