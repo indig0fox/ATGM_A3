@@ -1,5 +1,6 @@
 #define COLOR_HEADER "#DDAA00"
 #define COLOR_TEXT "#FFFFFF"
+#include "..\defines.hpp"
 
 if (!hasInterface) exitWith {};
 if (!isClass (missionConfigFile >> "CfgBriefing")) exitWith {};

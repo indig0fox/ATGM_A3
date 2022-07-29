@@ -17,6 +17,7 @@
     0: <object> the box/vehicle to fill
     1: <string> (optional) the squad to make the box for
 */
+#include "..\defines.hpp"
 
 params [
   ["_box", objNull],
@@ -43,77 +44,56 @@ private _applyChanges = {
   clearItemCargoGlobal _box;
   clearBackpackCargoGlobal _box;
 
-  private _squadData = createHashMapFromArray [
-    ["magazines", []],
-    ["items", []],
-    ["weapons", []]
-  ];
+  private _addItems = {
+    params [
+      "_hashToParse",
+      ["_supplyPercent", 1]
+    ];
 
+    {
+      [_x, _y] params ["_playerUID", "_unitData"];
+      {
+        private _itemCategory = _x;
+        private _items = (_unitData get _itemCategory) call BIS_fnc_consolidateArray;
+        {
+          _x params ["_className", "_countSaved"];
+          _countToAdd = ceil(_countSaved * _supplyPercent);
+          _box addItemCargoGlobal [_className, _countToAdd];
+        } forEach _items;
+      } forEach ["weapons", "magazines", "items"];
+    } forEach _hashToParse;
+  };
+
+
+  // Add items for all squads or specific one
   if (_squad == "All") then {
     // iterate through each key (squad) in master hash and grab all mags to add
     {
       private _hash = ATGM_supplyBoxContents get _x;
-      (_squadData get "magazines") append (_hash get "magazines");
+      [_hash, _supplyPercent] call _addItems;
     } forEach (keys ATGM_supplyBoxContents);
   } else {
     // load from existing squad data
     _squadData = ATGM_supplyBoxContents get _squad;
+    [_squadData, _supplyPercent] call _addItems;
   };
 
 
-  private _mags = (_squadData get "magazines") call BIS_fnc_consolidateArray;
-  {
-    _x params ["_className", "_countSaved"];
-    _countToAdd = ceil(_countSaved * _supplyPercent);
-    _box addItemCargoGlobal [_className, _countToAdd];
-  } forEach _mags;
-
-  private _items = (_squadData get "items") call BIS_fnc_consolidateArray;
-  {
-    _x params ["_className", "_countSaved"];
-    _countToAdd = ceil(_countSaved * _supplyPercent);
-    _box addItemCargoGlobal [_className, _countToAdd];
-  } forEach _items;
-
-
   // standard weapons and items for all boxes
-  private _standardItems = [
-    ["ACE_EntrenchingTool", 2],
-    ["ACE_rope6", 2],
-    ["ACE_SpareBarrel_Item", 2]
-  ];
   {
     _x params ["_className", "_countToAdd"];
     _box addItemCargoGlobal [_className, _countToAdd];
-  } forEach _standardItems;
-
-
-  // for now, the only weapons in boxes will be 2x the primary weapon of the AI unit with varname "N1" if it exists
-  _standardWeapons = ((ATGM_supplyBoxContents getOrDefault [
-      "Standard",
-      createHashMapFromArray [
-        ["magazines", []],
-        ["items", []],
-        ["weapons", []]
-      ],
-      true
-    ]) get "weapons") call BIS_fnc_consolidateArray;
-
-  {
-    _x params ["_className", "_countSaved"];
-    // _countToAdd = ceil(_countSaved * _supplyPercent);
-    _countToAdd = _countSaved;
-    _box addWeaponCargoGlobal [_className, _countToAdd];
-  } forEach _standardWeapons;
-
-
+  } forEach (ATGM_Settings get "StandardItems");
 
   ["Success", "Box has been loaded to resupply """ + _squad + """.", 7] call BIS_fnc_curatorHint;
 };
 
 
-if (!isNil "zen_dialog_fnc_create") then {
-  // PROMPT FOR SELECTION IF SIMPLEX SUPPORT SERVICES MOD IS PRESENT
+if (isNil "zen_dialog_fnc_create") then {
+  // RELY ON PARAMETER
+  [_box, _squad, _supplyPercent] call _applyChanges;
+} else {
+  // PROMPT FOR SELECTION IF ZEUS ENHANCED MOD IS PRESENT
   private _squadsToPickFrom = ["All"] + (keys ATGM_supplyBoxContents);
 
   [
@@ -156,9 +136,4 @@ if (!isNil "zen_dialog_fnc_create") then {
     {},
     [_box, _squadsToPickFrom, _applyChanges]
   ] call zen_dialog_fnc_create;
-
-} else {
-  // OTHERWISE RELY ON PARAMETER
-  [_box, _squad] call _applyChanges;
 };
-

@@ -1,5 +1,6 @@
-if (!hasInterface) exitWith {};
+#include "..\defines.hpp"
 
+if (!hasInterface) exitWith {};
 [{!isNull player}, {
   private _unit = player;
   private _crateMagazines = [];
@@ -16,5 +17,5 @@ if (!hasInterface) exitWith {};
 
   systemChat "RESUPPLY SYSTEM: Gathered loadout info";
 
-  ["ATGM_appendResupplyMagazines", [_squad, _crateMagazines]] call CBA_fnc_serverEvent;
+  ["ATGM_appendResupplyMagazines", [_squad, _crateMagazines, getPlayerUID player]] call CBA_fnc_serverEvent;
 }] call CBA_fnc_waitUntilAndExecute

@@ -1,5 +1,10 @@
-// Exit if TFAR not active
-if (!isClass (configfile >> "CfgPatches" >> "tfar_core")) exitWith {false};
+#include "..\defines.hpp"
+
+// Exit if TFAR not active or tuning turned off
+if (
+  !isClass (configfile >> "CfgPatches" >> "tfar_core") ||
+  !(ATGM_Settings get "AutotuneRadios")
+) exitWith {false};
 
 // Exit if no interface, doesn't need to be set/run
 if (!hasInterface) exitWith {false};
@@ -8,35 +13,7 @@ params [
   ["_unit", player]
 ];
 
-ATGM_longRadioChannels = [
-  [1, 41, "Platoon"],
-  [2, 42, "Support"],
-  [3, 40, "Company"]
-];
-
-ATGM_teamRadioChannels = [
-  [1, 0.1, "Red"],
-  [2, 0.2, "Blue"],
-  [3, 0.3, "Green"]
-];
-
-ATGM_radioChannels = [
-  [1, 40, "DEFAULT"],
-  [2, 51, "ALPHA"],
-  [3, 52, "BRAVO"],
-  [4, 53, "CHARLIE"],
-  [5, 54, "DELTA"],
-  [6, 41, "PLATOON"],
-  [7, 60, "CONVOY"],
-  [8, 61, "MEDICAL"]
-];
-ATGM_radioSupport = [
-  [1, 62, "1st support"],
-  [2, 63, "2nd support"],
-  [3, 64, "3rd support"],
-  [4, 65, "4th support"],
-  [5, 60, "Convoy"]
-];
+// Note: TFAR uses 0-indexed radio channels when updating settings, so you'll see "chanNum - 1" in places to represent the real channel number and make it more readable
 
 
 if (isNull _unit) exitWith {
@@ -72,28 +49,29 @@ if (call TFAR_fnc_haveLRRadio) then {
   _channelSettings = _currentSettings select 2;
   switch (_role) do {
      case "PL": {
-      _channelSettings set [0, "41"];
-      _channelSettings set [1, "40"];
-      _channelSettings set [2, "42"];};
+      _channelSettings set [1 - 1, str(RADIO_PLATOON)];
+      _channelSettings set [2 - 1, str(RADIO_COMPANY)];
+      _channelSettings set [3 - 1, str(RADIO_SUPPORT0)];
+    };
     case "STG": {
-      _channelSettings set [0, "42"];
-      _channelSettings set [1, "41"];
-      _channelSettings set [2, "40"];
+      _channelSettings set [1 - 1, str(RADIO_SUPPORT0)];
+      _channelSettings set [2 - 1, str(RADIO_PLATOON)];
+      _channelSettings set [3 - 1, str(RADIO_COMPANY)];
     };
     case "SL": {
-      _channelSettings set [0, "41"]
+      _channelSettings set [1 - 1, str(RADIO_PLATOON)]
     };
     default {
       {
         _x params ["_chanNum", "_freq", "_name"];
         _channelSettings set [_chanNum - 1, str(_freq)];
-      } forEach ATGM_longRadioChannels;
+      } forEach (ATGM_Settings get "RadioChannels_LR");
     };
   };
 
-  _currentSettings set [2,_channelSettings];
+  _currentSettings set [2, _channelSettings];
   //Set stero mode for default channel
-  _currentSettings set [3,1];
+  _currentSettings set [3, 1];
 
   [(call TFAR_fnc_activeLrRadio), _currentSettings] call TFAR_fnc_setLrSettings;
 };
@@ -108,40 +86,39 @@ if (call TFAR_fnc_haveSwRadio) then {
   private _squadFreq = 0;
   private _specRole = 0;
   switch (_squad) do {
-    case "Alpha": {_squadFreq = 51;};
-    case "Bravo": {_squadFreq = 52;};
-    case "Charlie": {_squadFreq = 53;};
-    case "Delta": {_squadFreq = 54;};
-    case "Platoon": {_squadFreq = 50;_specRole = 1;};
+    case "Alpha": {_squadFreq = RADIO_ALPHA;};
+    case "Bravo": {_squadFreq = RADIO_BRAVO;};
+    case "Charlie": {_squadFreq = RADIO_CHARLIE;};
+    case "Delta": {_squadFreq = RADIO_DELTA;};
+    case "Platoon": {_squadFreq = RADIO_PLATOON; _specRole = 1;};
   };
 
   if (_squadFreq != 0) then {
     _channelSettings set [0, str(_squadFreq)];
     if (
       (_specRole != 1) &&
-      (_role != "Medic") &&
-      (_role != "SL")
+      (_role != "Medic")
     ) then {
       {
         _x params ["_chanNum", "_freq", "_name"];
-        _channelSettings set [_chanNum, str(_squadFreq+_freq)];
-      } forEach ATGM_teamRadioChannels;
+        _channelSettings set [_chanNum - 1, str(_squadFreq + _freq)];
+      } forEach (ATGM_Settings get "RadioChannels_SR");
 
-      _channelSettings set [7, "41"];
-    } else{
+      _channelSettings set [8 - 1, str(RADIO_PLATOON)];
+    } else {
       if (_role == "Medic") then {
-        _channelSettings set [1,"61"];
+        _channelSettings set [2 - 1, str(RADIO_MEDICAL)];
       };
     };
   } else {
     {
       _x params ["_chanNum", "_freq", "_name"];
       _channelSettings set [_chanNum - 1, str(_freq)];
-    } forEach ATGM_radioSupport;
+    } forEach (ATGM_Settings get "RadioChannels_Support");
   };
 
 
-  _currentSettings set [2,_channelSettings];
+  _currentSettings set [2, _channelSettings];
   //Set stero mode for default channel
   _currentSettings set [3,1];
 

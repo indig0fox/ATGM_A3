@@ -1,12 +1,18 @@
+#include "..\defines.hpp"
+
+// Exit if ACRE2 not active or tuning turned off
+if (
+  !isClass (configfile >> "CfgPatches" >> "acre_main") ||
+  !(ATGM_Settings get "AutotuneRadios")
+) exitWith {false};
+
+// Exit if no interface, doesn't need to be set/run
+if (!hasInterface) exitWith {false};
+
 params [
   ["_unit", player]
 ];
 
-if !(_unit isEqualType objNull) then {
-  _unit = player;
-};
-
-if (!isClass (configfile >> "CfgPatches" >> "acre_main")) exitWith {false};
 
 ATGM_radioChannels = [
   [1, 40, "DEFAULT"],

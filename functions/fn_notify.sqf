@@ -18,6 +18,7 @@ Params:
  ["Tactical View is Disabled", "warning"] call Aquaman_fnc_notification_system;
  ["Cant Spawn Vehicle", "error", 50] call Aquaman_fnc_notification_system;
 */
+#include "..\defines.hpp"
 
 params [
     ["_text", "",[""] ],

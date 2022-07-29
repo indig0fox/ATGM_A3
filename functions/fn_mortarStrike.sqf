@@ -21,6 +21,7 @@
       <number> Smoke Delay between rounds in seconds
       <number> Smoke Radius of rounds around center of trigger location
 */
+#include "..\defines.hpp"
 
 [_this] spawn {
   params [
