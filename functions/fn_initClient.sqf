@@ -1,5 +1,6 @@
 #include "..\defines.hpp"
 
+if (!hasInterface) exitWith {};
 ["TFAR_event_OnRadiosReceived", {
   [{
     [player] call ATGM_fnc_radioSetup_TFAR;

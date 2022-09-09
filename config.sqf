@@ -1,3 +1,5 @@
+ATGM_LOGO_WEB = "https//i.imgur.com/myFyu7c.png";
+
 ATGM_Settings = createHashMapFromArray [
   ["dummySetting", false],
   ["AutotuneRadios", true],
@@ -10,10 +12,10 @@ ATGM_Settings = createHashMapFromArray [
   ]],
   ["MedicalItems", [
     ["FirstAidKit", 0],
-    ["ACE_fieldDressing", 20],
-    ["ACE_elasticBandage", 20],
-    ["ACE_packingBandage", 20],
-    ["ACE_quikclot", 20],
+    ["ACE_fieldDressing", 30],
+    ["ACE_elasticBandage", 30],
+    ["ACE_packingBandage", 30],
+    ["ACE_quikclot", 30],
     ["ACE_epinephrine", 20],
     ["ACE_morphine", 20],
     ["ACE_tourniquet", 10],
@@ -21,7 +23,7 @@ ATGM_Settings = createHashMapFromArray [
     ["ACE_surgicalKit", 1],
     ["ACE_personalAidKit", 0],
     ["ACE_bloodIV_250", 0],
-    ["ACE_bloodIV_500", 15],
+    ["ACE_bloodIV_500", 25],
     ["ACE_bloodIV", 10],
     ["ACE_plasmaIV_250", 0],
     ["ACE_plasmaIV_500", 0],

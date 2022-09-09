@@ -53,6 +53,10 @@ Radio assignment will not change. SR and LR radios will be autotuned so channels
     CHAN 8      N/A
 
 
+## SAFEZONE
+
+Place a marker named "safeZone1" to make players invincible while inside of it.
+
 
 ## AUTOMATIC SUPPLY & MEDICAL BOX FILLING
 
