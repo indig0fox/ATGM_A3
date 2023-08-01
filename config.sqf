@@ -2,7 +2,7 @@ ATGM_LOGO_WEB = "https//i.imgur.com/myFyu7c.png";
 
 ATGM_Settings = createHashMapFromArray [
   ["dummySetting", false],
-  ["AutotuneRadios", true],
+  ["AutoSetupRadios", true],
   ["StandardItems", [
     ["ACE_EntrenchingTool", 2],
     ["ACE_rope6", 2],
@@ -37,24 +37,53 @@ ATGM_Settings = createHashMapFromArray [
     ["ACE_Canteen", 0],
     ["ry_canteen_item", 5]
   ]],
-  ["RadioChannels_SR", [
-    // chan number and interval above squad frequency
-    [1, 0, "SQUAD"],
-    [2, 0.1, "Red"],
-    [3, 0.2, "Blue"],
-    [4, 0.3, "Green"]
+  ["EquipRadios_TFAR", createHashMapFromArray [
+    [west, ["TFAR_anprc152", "TFAR_rt1523g"]],
+    [east, ["TFAR_fadak", "TFAR_mr3000"]],
+    [independent, ["TFAR_anprc148jem", "TFAR_anprc155"]],
+    [civilian, ["TFAR_anprc152", "TFAR_rt1523g"]]
   ]],
-  ["RadioChannels_LR", [
+  ["RadioChannels_TFAR_SR", [
+    // channel, freq, name
+    [1, RADIO_ALPHA, "ALPHA"],
+    [2, RADIO_ALPHA + 0.1, "A-RED"],
+    [3, RADIO_ALPHA + 0.2, "A-BLUE"],
+    [4, RADIO_BRAVO, "BRAVO"],
+    [5, RADIO_BRAVO + 0.1, "B-RED"],
+    [6, RADIO_BRAVO + 0.2, "B-BLUE"],
+    [7, RADIO_PLATOON, "PLATOON"],
+    [8, RADIO_COMPANY, "COMPANY"]
+  ]],
+  ["RadioChannels_TFAR_LR", [
     // chan number and from defines.hpp
-    [1, RADIO_PLATOON, "Platoon"],
-    [2, RADIO_SUPPORT0, "Support"],
-    [3, RADIO_COMPANY, "Company"]
+    [1, RADIO_PLATOON, "PLATOON"],
+    [2, RADIO_COMPANY, "COMPANY"]
   ]],
-  ["RadioChannels_Support", [
-    [1, RADIO_SUPPORT1, "1st support"],
-    [2, RADIO_SUPPORT2, "2nd support"],
-    [3, RADIO_SUPPORT3, "3rd support"],
-    [4, RADIO_SUPPORT4, "4th support"],
-    [5, RADIO_CONVOY, "Convoy"]
+  ["EquipRadios_ACRE", createHashMapFromArray [
+    [west, ["ACRE_BF888S", "ACRE_PRC152"]],
+    [east, ["ACRE_BF888S", "ACRE_PRC148"]],
+    [independent, ["ACRE_BF888S", "ACRE_PRC148"]],
+    [civilian, ["ACRE_BF888S"]]
+  ]],
+  ["RadioChannels_ACRE", [
+    [1, "GENERAL"],
+    [2, "PLATOON"],
+    [3, "ALPHA"],
+    [4, "BRAVO"],
+    [5, "CHARLIE"],
+    [6, "AIR"],
+    [7, "MEDICAL"],
+    [8, "SUPPORT"]
+  ]],
+  ["BabelLanguages_ACRE", [ // denotes the languages present in mission
+    ["en", "English"],
+    ["ru", "Russian"],
+    ["ab", "Arabic"]
+  ]],
+  ["BabelSides_ACRE", [ // denotes which languages each side can speak
+    [west, ["en"]],
+    [east, ["ru"]],
+    [independent, ["ab"]],
+    [civilian, ["en", "ru", "ab"]]
   ]]
 ];
